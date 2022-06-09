@@ -157,7 +157,6 @@ class AdminService extends BaseService {
     return response;
   }
 
-
   // the service for create new admin by email
   async createFromEmail(email) {
     const response = {
