@@ -1,7 +1,7 @@
 import BaseController from "../../../../base/BaseController"
 import autoBind from "auto-bind";
-import { getPage } from "../../../../utils/Pagination";
 import UserService from "../../../domain/account/user/UserService";
+import { getPage } from "../../../../utils/Pagination";
 
 class UserController extends BaseController {
     constructor() {
