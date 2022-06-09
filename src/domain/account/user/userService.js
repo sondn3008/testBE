@@ -1,5 +1,5 @@
 import autoBind from "auto-bind";
-import { createUser, loginUser } from "./UserFactory";
+import { createUser, loginUser } from "./userFactory.js";
 import BaseService from "../../../../base/BaseService";
 import UserRepository from "../../../infrastructure/account/user/UserRepository";
 import { validPassword, hashPassword, makeCode } from "../../../../helper/Utility.js";
