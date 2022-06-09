@@ -89,7 +89,6 @@ class SellerService extends BaseService {
     };
 
     // Validate
-
     const result = await loginSeller(data);
     if (result.error) {
       response.statusCode = 400;
@@ -126,13 +125,12 @@ class SellerService extends BaseService {
     response.statusCode = 200;
 
     let user = seller.data;
-    user.password = "";
+    delete user.password;
 
     response.json = {
       success: true,
       user: user,
-      token: token,
-      expiresIn: 10000000,
+      token: token
     };
     return response;
   }

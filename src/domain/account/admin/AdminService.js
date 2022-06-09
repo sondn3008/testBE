@@ -34,8 +34,6 @@ class AdminService extends BaseService {
     // Check Email Exist
     const checkEmailResult = await adminRepository.findOneByEmail(data.email);
 
-    console.log(checkEmailResult)
-
     if (checkEmailResult.isSuccess) {
       response.statusCode = 400;
       response.json = {
@@ -108,13 +106,12 @@ class AdminService extends BaseService {
     response.statusCode = 200;
 
     let user = admin.data
-    user.password = ''
+    delete user.password
 
     response.json = {
       success: true,
       user: user,
-      token: token,
-      expiresIn: 10000000,
+      token: token
     }
     return response;
   }
