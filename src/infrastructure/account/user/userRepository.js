@@ -27,19 +27,6 @@ class UserRepository extends BaseRepository {
         });
         return result;
     }
-
-    async findOneByEmail(email) {
-        const result = await this.model.findOne({
-            where: { email: email },
-            raw: true
-        });
-        return result;
-    }
-
-    async create(data) {
-        const result = await this.model.create(data);
-        return result;
-    }
 }
 
 export default UserRepository;

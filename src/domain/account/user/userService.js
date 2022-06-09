@@ -1,5 +1,5 @@
 import autoBind from "auto-bind";
-import { createUser, loginUser } from "./UserFactory";
+import { createValidate, loginValidate} from "./UserFactory";
 import BaseService from "../../../../base/BaseService";
 import UserRepository from "../../../infrastructure/account/user/UserRepository";
 import { validPassword, hashPassword, makeCode } from "../../../../helper/Utility";
@@ -12,14 +12,14 @@ class UserService extends BaseService {
         autoBind(this);
     }
 
-    async createAnUser(data) {
+    async createUser(data) {
         const response = {
             json: null,
             statusCode: null,
         };
 
         // Validate data and create object
-        const newUser = await createUser(data);
+        const newUser = await createValidate(data);
         if (newUser.error) {
             response.statusCode = 400;
             response.json = {
@@ -57,14 +57,14 @@ class UserService extends BaseService {
         return response;
     }
 
-    async loginAnUser(data) {
+    async loginUser(data) {
         const response = {
             json: null,
             statusCode: null,
         };
 
         // Validate data and create object
-        const newUser = await loginUser(data);
+        const newUser = await loginValidate(data);
         if (newUser.error) {
             response.statusCode = 400;
             response.json = {
@@ -95,6 +95,20 @@ class UserService extends BaseService {
             };
             return response;
         }
+                //JWT
+        const token = await createJWT({ id: checkEmailResult.data.id });
+
+        response.statusCode = 200;
+
+        let user = checkEmailResult.data
+        user.password = ""
+
+        response.json = {
+            success: true,
+            user: user,
+            accessToken: token,
+        }
+        return response;
     }
 
     // get all user 
