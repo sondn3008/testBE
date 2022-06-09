@@ -1,6 +1,6 @@
 import { User } from './UserDomainModel';
 
-export const createUser = async (data) => {
+const createUser = async (data) => {
     const user = joi.object({
         phone: joi.optional(),
         address: joi.string().optional(),
@@ -29,4 +29,32 @@ export const createUser = async (data) => {
         );
     }
     return newUser;
+}
+
+const loginUser = async (data) => {
+    const user = joi.object({
+        password: joi.string().required(),
+        email: joi.string().email().required(),
+    });
+
+    const newUser = {
+        info: {},
+        Message: "",
+        error: false
+    };
+
+    const validationResult = user.validate(data);
+
+    if (validationResult.error) {
+        newUser.error = true
+        newUser.Message = validationResult.error.details[0].message;
+    } else {
+        newUser.Message = "Validate Success"
+    }
+    return newUser;
+}
+
+export default {
+    createUser,
+    loginUser,
 }
