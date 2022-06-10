@@ -3,6 +3,7 @@ import { createValidate, loginValidate} from "./UserFactory";
 import BaseService from "../../../../base/BaseService";
 import UserRepository from "../../../infrastructure/account/user/UserRepository";
 import { validPassword, hashPassword, makeCode } from "../../../../helper/Utility";
+import {createJWT} from "../../../auth/auth.services"
 
 const userRepository = new UserRepository();
 
@@ -45,6 +46,7 @@ class UserService extends BaseService {
 
         // Create new user
         const result = await userRepository.create(newUser.info);
+        console.log(result)
         if (!result.isSuccess) {
             response.statusCode = 500;
             response.json = {
@@ -53,6 +55,7 @@ class UserService extends BaseService {
             return response;
         }
 
+        response.statusCode = 200
         response.json = result;
         return response;
     }
@@ -101,7 +104,7 @@ class UserService extends BaseService {
         response.statusCode = 200;
 
         let user = checkEmailResult.data
-        user.password = ""
+        delete user.password
 
         response.json = {
             success: true,
